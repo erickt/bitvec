@@ -25,6 +25,18 @@ jobs:
           toolchain: ${{ matrix.rust }}
       - run: cargo test
 
+  miri:
+    name: Test Miri
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightlyg
+          components: miri
+      - run: cargo miri setup
+      - run: cargo miri test
+
   docs:
     name: docs
     runs-on: ubuntu-latest
